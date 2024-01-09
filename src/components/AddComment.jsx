@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-const AddComment = (asin) => {
+const AddComment = ({ asin }) => {
   // state = {
   //   comment: {
   //     comment: '',
@@ -17,7 +17,8 @@ const AddComment = (asin) => {
   });
 
   useEffect(() => {
-    setComment();
+    setComment({ ...comment, elementId: asin });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asin]);
 
   const sendComment = async (e) => {
@@ -28,7 +29,8 @@ const AddComment = (asin) => {
         body: JSON.stringify(comment),
         headers: {
           "Content-type": "application/json",
-          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTlkNjg2YmU2Mjg4NjAwMTg4M2Y2N2YiLCJpYXQiOjE3MDQ4MTQ3MDAsImV4cCI6MTcwNjAyNDMwMH0.mVs62UdAZr6vzOJbc1qk55vk7wjgzg3pmxlh59rv5dlgewd9jem5nrt4w",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTc0ODExZDJjNmEwZDAwMTg0OTVmN2IiLCJpYXQiOjE3MDQ4MTc1ODYsImV4cCI6MTcwNjAyNzE4Nn0.i8DwDOQ1hsjn7U5kla0fYgOFqRlCEGwgeXbhgcH4quo",
         },
       });
       if (response.ok) {
@@ -45,6 +47,7 @@ const AddComment = (asin) => {
       alert(error);
     }
   };
+  console.log("COMMENT", comment);
   return (
     <div className="my-3">
       <Form onSubmit={sendComment}>

@@ -3,17 +3,17 @@ import { Col, Form, Row } from "react-bootstrap";
 import CommentArea from "./CommentArea";
 import { useState } from "react";
 
-const BookList = (asin, books) => {
+const BookList = ({ books }) => {
   // state = {
   //   searchQuery: '',
   //   selectedBook: null,
   // }
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBookAsin, setSelectedBookAsin] = useState(null);
 
-  const changeSelectedBook = () => {
-    setSelectedBook(asin);
+  const changeSelectedBook = (asin) => {
+    setSelectedBookAsin(asin);
   };
 
   return (
@@ -37,13 +37,13 @@ const BookList = (asin, books) => {
               .filter((b) => b.title.toLowerCase().includes(searchQuery))
               .map((b) => (
                 <Col xs={12} md={4} key={b.asin}>
-                  <SingleBook book={b} selectedBook={selectedBook} changeSelectedBook={changeSelectedBook} />
+                  <SingleBook book={b} selectedBook={selectedBookAsin} changeSelectedBook={changeSelectedBook} />
                 </Col>
               ))}
           </Row>
         </Col>
         <Col md={4}>
-          <CommentArea asin={selectedBook} />
+          <CommentArea asin={selectedBookAsin} />
         </Col>
       </Row>
     </>

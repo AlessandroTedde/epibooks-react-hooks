@@ -4,7 +4,7 @@ import AddComment from "./AddComment";
 import Loading from "./Loading";
 import Error from "./Error";
 
-const CommentArea = (asin) => {
+const CommentArea = ({ asin }) => {
   // state = {
   //   comments: [],
   //   isLoading: false,
@@ -22,7 +22,9 @@ const CommentArea = (asin) => {
   //     })
 
   useEffect(() => {
-    fetchComments();
+    if (asin) {
+      fetchComments();
+    }
   }, [asin]);
 
   const fetchComments = async () => {
@@ -30,7 +32,7 @@ const CommentArea = (asin) => {
       let response = await fetch("https://striveschool-api.herokuapp.com/api/comments/" + asin, {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTlkNjg2YmU2Mjg4NjAwMTg4M2Y2N2YiLCJpYXQiOjE3MDQ4MTQ3MDAsImV4cCI6MTcwNjAyNDMwMH0.mVs62UdAZr6vzOJbc1qk55vk7wjgzg3pmxlh59rv5dlgewd9jem5nrt4w",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTc0ODExZDJjNmEwZDAwMTg0OTVmN2IiLCJpYXQiOjE3MDQ4MTc1ODYsImV4cCI6MTcwNjAyNzE4Nn0.i8DwDOQ1hsjn7U5kla0fYgOFqRlCEGwgeXbhgcH4quo",
         },
       });
       console.log(response);
@@ -54,7 +56,7 @@ const CommentArea = (asin) => {
     <div className="text-center">
       {isLoading && <Loading />}
       {isError && <Error />}
-      <AddComment asin={this.props.asin} />
+      <AddComment asin={asin} />
       <CommentList commentsToShow={comments} />
     </div>
   );
